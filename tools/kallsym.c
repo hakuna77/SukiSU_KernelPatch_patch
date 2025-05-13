@@ -382,7 +382,7 @@ static int find_approx_offsets(kallsym_t *info, char *img, int32_t imglen)
     int32_t elem_size = info->asm_long_size;
     int64_t prev_offset = 0;
     int32_t cand = 0;
-    int32_t MAX_ZERO_OFFSET_NUM = 20;
+    int32_t MAX_ZERO_OFFSET_NUM = 10;
     int32_t zero_offset_num = 0;
     for (; cand < imglen - KSYM_MIN_NEQ_SYMS * elem_size; cand += elem_size) {
         int64_t offset = int_unpack(img + cand, elem_size, info->is_be);
@@ -390,7 +390,7 @@ static int find_approx_offsets(kallsym_t *info, char *img, int32_t imglen)
             continue;
         } else if (offset > prev_offset) {
             prev_offset = offset;
-            if (sym_num++ >= 64) break;
+            if (sym_num++ >= KSYM_MIN_NEQ_SYMS) break;
         } else {
             prev_offset = 0;
             sym_num = 0;

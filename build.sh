@@ -34,6 +34,7 @@ make
 cd $HOME
 
 export ANDROID_NDK=${ANDROID_NDK:-$NDK_HOME}
+export PATH="$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin:$PATH"
 
 cp -r $TOOLS/build/android/kptools-android $PATCH/res
 cp -r $TOOLS/build/kptools-linux $PATCH/res

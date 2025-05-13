@@ -33,7 +33,7 @@ make
 
 cd $HOME
 
-export ANDROID_NDK=/root/other/ndk/android-ndk-r28
+export ANDROID_NDK=$PWD/ndk/android-ndk-r28
 
 cp -r $TOOLS/build/android/kptools-android $PATCH/res
 cp -r $TOOLS/build/kptools-linux $PATCH/res

@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 
-HOME=/root/other
-TOOLS=/root/other/tools
-PATCH=/root/other/patch
-KERNEL=/root/other/kernel
+HOME=$(pwd)
+TOOLS="$HOME/tools"
+PATCH="$HOME/patch"
+KERNEL="$HOME/kernel"
 # 构建 Android 版本
 cd $TOOLS
 rm -rf build/android

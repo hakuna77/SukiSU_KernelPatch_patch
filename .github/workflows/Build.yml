@@ -1,4 +1,4 @@
-name: Build and Upload Artifact
+name: Build KPTools & Patch
 
 on:
   workflow_dispatch:
@@ -7,19 +7,45 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    env:
+      HOME: ${{ github.workspace }}
+      TOOLS: ${{ github.workspace }}/tools
+      PATCH: ${{ github.workspace }}/patch
+      KERNEL: ${{ github.workspace }}/kernel
+      ANDROID_NDK: ${{ github.workspace }}/ndk/android-ndk-r28
+      NDK_HOME: ${{ github.workspace }}/ndk/android-ndk-r28
+
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Give permission to build.sh
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ninja-build xxd cmake make g++
+
+      - name: Download Android NDK r28
+        run: |
+          mkdir -p ndk
+          cd ndk
+          wget https://dl.google.com/android/repository/android-ndk-r28b-linux-x86_64.zip
+          unzip android-ndk-r28b-linux-x86_64.zip
+          mv android-ndk-r28b android-ndk-r28
+
+      - name: Make build.sh executable
         run: chmod +x build.sh
 
-      - name: Run build script
+      - name: Run build.sh
         run: ./build.sh
 
-      - name: Upload build output as artifact
+      - name: Upload patch_android
         uses: actions/upload-artifact@v4
         with:
-          name: build-output
-          path: output/
-          
+          name: patch_android
+          path: patch_android/
+
+      - name: Upload patch_linux
+        uses: actions/upload-artifact@v4
+        with:
+          name: patch_linux
+          path: patch_linux/

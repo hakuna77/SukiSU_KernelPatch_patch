@@ -1,5 +1,5 @@
 ifndef TARGET_COMPILE
-    TARGET_COMPILE=$ANDROID_NDK/toolchains/llvm/prebuilt/linux-x86_64/bin
+    TARGET_COMPILE ?= $(ANDROID_NDK)/toolchains/llvm/prebuilt/linux-x86_64/bin
 endif
 
 TARGET=kpimg
